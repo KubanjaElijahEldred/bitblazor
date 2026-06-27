@@ -79,6 +79,61 @@ This guide provides a quick overview of all BitBlazor components with basic exam
 </BitCard>
 ```
 
+### Pagination
+```razor
+<!-- Basic pagination with two-way binding -->
+<BitPagination NumberOfPages="10"
+               Description="Navigate pages"
+               @bind-Page="currentPage" />
+
+<!-- Centered, with ellipsis -->
+<BitPagination NumberOfPages="50"
+               Description="Navigate pages"
+               @bind-Page="currentPage"
+               Alignment="PaginationAlignment.Center"
+               PageRangeSize="2" />
+
+<!-- Simple mode -->
+<BitPagination NumberOfPages="20"
+               Description="Navigate pages"
+               @bind-Page="currentPage"
+               ViewMode="PaginationViewMode.Simple" />
+
+<!-- With jump-to-page and total summary -->
+<BitPagination NumberOfPages="10"
+               Description="Navigate pages"
+               @bind-Page="currentPage"
+               ShowJumpToPage="true">
+    <TotalItemsTemplate>
+        Results @((currentPage - 1) * 10 + 1)–@(currentPage * 10) of 100
+    </TotalItemsTemplate>
+</BitPagination>
+```
+
+### Toolbar
+```razor
+<!-- Basic horizontal toolbar -->
+<BitToolbar>
+    <BitToolbarItem IconName="it-home" Label="Home" Href="/" />
+    <BitToolbarItem IconName="it-search" Label="Search" Href="/search" />
+    <BitToolbarItem IconName="it-settings" Label="Settings" Href="/settings" />
+</BitToolbar>
+
+<!-- With active item, disabled item, and divider -->
+<BitToolbar>
+    <BitToolbarItem IconName="it-home" Label="Home" Href="/" Active="true" />
+    <BitToolbarItem IconName="it-search" Label="Search" Href="/search" />
+    <BitToolbarDivider />
+    <BitToolbarItem IconName="it-lock" Label="Locked" Disabled="true" />
+</BitToolbar>
+
+<!-- Small vertical toolbar with badge -->
+<BitToolbar Size="ToolbarSize.Small" Orientation="Orientation.Vertical">
+    <BitToolbarItem IconName="it-mail" Label="Messages" BadgeCount="5" BadgeLabel="new" />
+    <BitToolbarItem IconName="it-bell" Label="Notifications" BadgeCount="3" />
+</BitToolbar>
+```
+
 ## Form Components
 
 ### BitTextField
@@ -130,6 +185,152 @@ This guide provides a quick overview of all BitBlazor components with basic exam
         Maximum 500 characters. Currently: @(model.Description?.Length ?? 0) characters.
     </AdditionalText>
 </BitTextAreaField>
+```
+
+### BitNumberField
+```razor
+<!-- Basic number field -->
+<BitNumberField Label="Age" @bind-Value="model.Age" />
+
+<!-- With min/max and step -->
+<BitNumberField Label="Price" 
+                @bind-Value="model.Price"
+                Min="0"
+                Max="999.99m"
+                Step="0.01m">
+    <SymbolContent>€</SymbolContent>
+</BitNumberField>
+
+<!-- Adaptive sizing -->
+<BitNumberField Label="Quantity" 
+                @bind-Value="model.Quantity"
+                Adaptive="true"
+                Min="1"
+                Step="1" />
+```
+
+### BitSelectField
+```razor
+<!-- Basic select field -->
+<BitSelectField Label="Country" @bind-Value="model.Country">
+    <BitSelectItem Value="@string.Empty">Select a country...</BitSelectItem>
+    <BitSelectItem Value="@("IT")">Italy</BitSelectItem>
+    <BitSelectItem Value="@("US")">United States</BitSelectItem>
+    <BitSelectItem Value="@("UK")">United Kingdom</BitSelectItem>
+</BitSelectField>
+
+<!-- Select with grouped options -->
+<BitSelectField Label="Browser" @bind-Value="model.Browser">
+    <BitSelectItem Value="@string.Empty">Choose a browser...</BitSelectItem>
+    <BitSelectItemGroup Label="Modern Browsers">
+        <BitSelectItem Value="@("chrome")">Google Chrome</BitSelectItem>
+        <BitSelectItem Value="@("firefox")">Mozilla Firefox</BitSelectItem>
+        <BitSelectItem Value="@("edge")">Microsoft Edge</BitSelectItem>
+    </BitSelectItemGroup>
+</BitSelectField>
+
+<!-- Select with enum values -->
+<BitSelectField Label="Status" @bind-Value="model.Status">
+    <BitSelectItem Value="@OrderStatus.Pending">Pending</BitSelectItem>
+    <BitSelectItem Value="@OrderStatus.Processing">Processing</BitSelectItem>
+    <BitSelectItem Value="@OrderStatus.Shipped">Shipped</BitSelectItem>
+</BitSelectField>
+```
+
+### BitCheckbox
+```razor
+<!-- Basic checkbox -->
+<BitCheckbox Label="I agree to the terms" @bind-Value="model.AcceptedTerms" />
+
+<!-- Inline checkboxes -->
+<BitCheckbox Label="Option 1" Inline="true" @bind-Value="option1" />
+<BitCheckbox Label="Option 2" Inline="true" @bind-Value="option2" />
+
+<!-- Grouped checkbox -->
+<BitCheckbox Label="Right aligned" Grouped="true" @bind-Value="grouped" />
+
+<!-- With validation -->
+<BitCheckbox Label="I accept the privacy policy" 
+             @bind-Value="model.AcceptedPrivacy"
+             For="@(() => model.AcceptedPrivacy)" />
+```
+
+### BitToggle
+```razor
+<!-- Basic toggle -->
+<BitToggle Label="Enable notifications" @bind-Value="model.NotificationsEnabled" />
+
+<!-- Grouped toggle (right aligned) -->
+<BitToggle Label="Dark mode" 
+           ViewMode="ToggleViewMode.Grouped" 
+           @bind-Value="darkMode" />
+
+<!-- With validation -->
+<BitToggle Label="Accept terms of service" 
+           @bind-Value="model.AcceptedTerms"
+           For="@(() => model.AcceptedTerms)" />
+
+<!-- With additional text -->
+<BitToggle Label="Enable analytics"
+           @bind-Value="model.AnalyticsEnabled"
+           AdditionalTextId="helper-text">
+    <AdditionalText>
+        Help us improve by sharing anonymous usage data
+    </AdditionalText>
+</BitToggle>
+```
+
+### BitRadio
+```razor
+<!-- Basic radio group -->
+<BitRadioGroup @bind-Value="model.SelectedOption">
+    <BitRadio Label="Option 1" Value="1" />
+    <BitRadio Label="Option 2" Value="2" />
+    <BitRadio Label="Option 3" Value="3" />
+</BitRadioGroup>
+
+<!-- Inline radio buttons -->
+<BitRadioGroup @bind-Value="model.Size" Inline="true">
+    <BitRadio Label="Small" Value="Size.Small" />
+    <BitRadio Label="Medium" Value="Size.Medium" />
+    <BitRadio Label="Large" Value="Size.Large" />
+</BitRadioGroup>
+
+<!-- With validation -->
+<BitRadioGroup @bind-Value="model.PreferredContact"
+               For="@(() => model.PreferredContact)">
+    <BitRadio Label="Email" Value="ContactMethod.Email" />
+    <BitRadio Label="Phone" Value="ContactMethod.Phone" />
+    <BitRadio Label="SMS" Value="ContactMethod.SMS" />
+</BitRadioGroup>
+
+<!-- Grouped radio buttons -->
+<BitRadioGroup @bind-Value="model.Agreement" Grouped="true">
+    <BitRadio Label="I agree" Value="true" />
+    <BitRadio Label="I do not agree" Value="false" />
+</BitRadioGroup>
+```
+
+### BitTimepicker
+```razor
+<!-- Basic time picker -->
+<BitTimepicker Label="Meeting Time" @bind-Value="model.MeetingTime" />
+
+<!-- With validation -->
+<BitTimepicker Label="Appointment Time" 
+               @bind-Value="model.AppointmentTime"
+               For="@(() => model.AppointmentTime)" />
+```
+
+### BitDatepicker
+```razor
+<!-- Basic date picker -->
+<BitDatepicker Label="Birth Date" @bind-Value="model.BirthDate" />
+
+<!-- With validation -->
+<BitDatepicker Label="Event Date" 
+               @bind-Value="model.EventDate"
+               For="@(() => model.EventDate)" />
 ```
 
 ## Utilities
@@ -248,11 +449,58 @@ Size.Large        // Large
                               @bind-Value="model.Password"
                               For="@(() => model.Password)" />
         </div>
+        <div class="col-md-6">
+            <BitNumberField Label="Age" 
+                            @bind-Value="model.Age"
+                            For="@(() => model.Age)"
+                            Min="13"
+                            Max="120" />
+        </div>
+        <div class="col-md-6">
+            <BitTextField Label="Phone" 
+                          Type="TextFieldType.Tel"
+                          @bind-Value="model.Phone"
+                          For="@(() => model.Phone)" />
+        </div>
+        <div class="col-md-6">
+            <BitSelectField Label="Country" 
+                            @bind-Value="model.Country"
+                            For="@(() => model.Country)">
+                <BitSelectItem Value="@string.Empty">Select a country...</BitSelectItem>
+                <BitSelectItem Value="@("IT")">Italy</BitSelectItem>
+                <BitSelectItem Value="@("US")">United States</BitSelectItem>
+                <BitSelectItem Value="@("UK")">United Kingdom</BitSelectItem>
+                <BitSelectItem Value="@("FR")">France</BitSelectItem>
+                <BitSelectItem Value="@("DE")">Germany</BitSelectItem>
+            </BitSelectField>
+        </div>
+        <div class="col-md-6">
+            <BitDatepicker Label="Birth Date" 
+                           @bind-Value="model.BirthDate"
+                           For="@(() => model.BirthDate)" />
+        </div>
+        <div class="col-md-6">
+            <BitTimepicker Label="Preferred Contact Time" 
+                           @bind-Value="model.PreferredTime"
+                           For="@(() => model.PreferredTime)" />
+        </div>
         <div class="col-12">
             <BitTextAreaField Label="Bio" 
                               Rows="4"
                               @bind-Value="model.Bio"
                               Placeholder="Tell us about yourself..." />
+        </div>
+        <div class="col-12">
+            <BitCheckbox Label="I agree to the terms and conditions" 
+                         @bind-Value="model.AcceptedTerms"
+                         For="@(() => model.AcceptedTerms)" />
+        </div>
+        <div class="col-12">
+            <BitRadioGroup @bind-Value="model.PreferredContact"
+                           For="@(() => model.PreferredContact)">
+                <BitRadio Label="Contact me by email" Value="ContactMethod.Email" />
+                <BitRadio Label="Contact me by phone" Value="ContactMethod.Phone" />
+            </BitRadioGroup>
         </div>
     </div>
     
@@ -292,7 +540,33 @@ Size.Large        // Large
         [StringLength(100, MinimumLength = 8)]
         public string Password { get; set; } = string.Empty;
         
+        [Required]
+        [Range(13, 120)]
+        public int Age { get; set; }
+        
+        [Phone]
+        public string? Phone { get; set; }
+        
+        [Required]
+        public string Country { get; set; } = string.Empty;
+        
+        [Required]
+        public DateOnly BirthDate { get; set; }
+        
+        public TimeOnly? PreferredTime { get; set; }
+        
         public string? Bio { get; set; }
+        
+        public bool AcceptedTerms { get; set; }
+        
+        [Required]
+        public ContactMethod PreferredContact { get; set; }
+    }
+    
+    private enum ContactMethod
+    {
+        Email,
+        Phone
     }
     
     private async Task HandleSubmit()

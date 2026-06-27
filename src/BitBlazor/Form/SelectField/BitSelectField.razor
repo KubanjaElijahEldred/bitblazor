@@ -1,0 +1,24 @@
+﻿@namespace BitBlazor.Form
+
+@typeparam T
+@inherits BitFormComponentBase<T>
+
+<div class="@ComputeContainerCssClass()">
+    <label for="@Id">@Label</label>
+    <InputSelect TValue="T" 
+                 Value="Value"
+                 ValueChanged="ValueChanged"
+                 ValueExpression="ValueExpression"
+                 name="@Id"
+                 disabled="@Disabled"
+                 class="@ComputeInputCssClass()"
+                 @attributes="AdditionalAttributes">
+        <CascadingValue Value="this">
+            @ChildContent
+        </CascadingValue>
+    </InputSelect>
+
+    @RenderValidationMessage()
+
+    @RenderAdditionalText()
+</div>

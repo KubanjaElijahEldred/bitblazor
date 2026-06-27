@@ -1,0 +1,23 @@
+﻿@namespace BitBlazor.Form
+
+@inherits BitFormComponentBase<bool>
+
+<div class="@ComputeContainerCssClass()">
+    <div class="toggles">
+        <label for="@Id">
+            @Label
+            <InputCheckbox Value="Value"
+                           ValueChanged="ValueChanged"
+                           ValueExpression="ValueExpression"
+                           name="@Id"
+                           disabled="@Disabled"
+                           class="@ComputeInputCssClass()"
+                           @attributes="AdditionalAttributes" />
+            <span class="lever"></span>
+        </label>
+    </div>
+
+    @RenderValidationMessage()
+
+    @RenderAdditionalText()
+</div>

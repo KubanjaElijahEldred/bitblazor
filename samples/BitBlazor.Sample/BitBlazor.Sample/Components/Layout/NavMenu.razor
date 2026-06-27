@@ -1,0 +1,123 @@
+﻿@implements IDisposable
+
+@inject NavigationManager NavigationManager
+
+<div class="sidebar-wrapper">
+
+    <div class="sidebar-linklist-wrapper">
+        <div class="link-list-wrapper">
+            <ul class="link-list">
+                <li><h3>Servizi al Cittadino</h3></li>
+                <li>
+                    <NavLink class="list-item medium" href="" Match="NavLinkMatch.All">
+                        <BitIcon IconName="@Icons.ItPa" />
+                        <span>Dashboard</span>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink class="list-item medium" href="servizi">
+                        <BitIcon IconName="@Icons.ItFolder" />
+                        <span>Servizi</span>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink class="list-item medium" href="modulistica">
+                        <BitIcon IconName="@Icons.ItNote" />
+                        <span>Modulistica</span>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink class="list-item medium" href="pratiche">
+                        <BitIcon IconName="@Icons.ItFolder" />
+                        <span>Pratiche</span>
+                        <BitBadge Text="42" BackgroundColor="Color.Primary" Rounded="true" CssClass="ms-auto" />
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink class="list-item medium" href="news">
+                        <BitIcon IconName="@Icons.ItHorn" />
+                        <span>Notizie</span>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink class="list-item medium" href="comunicazioni">
+                        <BitIcon IconName="@Icons.ItMail" />
+                        <span>Comunicazioni</span>
+                        <BitBadge Text="3" BackgroundColor="Color.Danger" Rounded="true" CssClass="ms-auto" />
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink class="list-item medium" href="sportello">
+                        <BitIcon IconName="@Icons.ItCard" />
+                        <span>Sportello Digitale</span>
+                    </NavLink>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="sidebar-linklist-wrapper linklist-secondary">
+        <div class="link-list-wrapper">
+            <ul class="link-list">
+                <li><h3>Account</h3></li>
+                <AuthorizeView>
+                    <Authorized>
+                        <li>
+                            <NavLink class="list-item medium" href="Account/Manage">
+                                <BitIcon IconName="@Icons.ItUser" />
+                                <span>@context.User.Identity?.Name</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <form action="Account/Logout" method="post">
+                                <AntiforgeryToken />
+                                <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                                <button type="submit" class="list-item medium">
+                                    <BitIcon IconName="@Icons.ItClose" />
+                                    <span>Disconnetti</span>
+                                </button>
+                            </form>
+                        </li>
+                    </Authorized>
+                    <NotAuthorized>
+                        <li>
+                            <NavLink class="list-item medium" href="Account/Register">
+                                <BitIcon IconName="@Icons.ItUser" />
+                                <span>Registrati</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink class="list-item medium" href="Account/Login">
+                                <BitIcon IconName="@Icons.ItSettings" />
+                                <span>Accedi</span>
+                            </NavLink>
+                        </li>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+@code {
+    private string? currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}
+

@@ -1,2 +1,6 @@
-<BlazingStoryApp Assemblies="[typeof(App).Assembly, typeof(BitBlazor._Imports).Assembly]">
+@using static BlazingStory.Types.NavigationTreeOrderBuilder
+
+<BlazingStoryApp Assemblies="[typeof(App).Assembly, typeof(BitBlazor._Imports).Assembly]"
+                 NavigationTreeOrder="@N["Welcome"]" 
+                 Title="BitBlazor">
 </BlazingStoryApp>

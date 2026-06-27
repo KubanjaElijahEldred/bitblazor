@@ -8,9 +8,10 @@ BitBlazor provides a comprehensive set of ready-to-use UI components that follow
 
 ## Library Structure
 
-The library is organized into two main namespaces:
+The library is organized into these namespaces:
 
 - **`BitBlazor.Components`**: Core UI components
+- **`BitBlazor.Form`**: Form components with validation support
 - **`BitBlazor.Utilities`**: Utilities and support components
 
 ## Available Components
@@ -23,11 +24,23 @@ Alert system for contextual user feedback.
 - Support for dismissible alerts
 - Event handling callbacks
 
+#### [Avatar](components/avatar.md)
+User avatar component for displaying profile images, icons, or initials.
+- Support for images, icons, or text initials
+- User status and presence indicators
+- Clickable links and extra descriptive text
+- Can be used standalone or within avatar groups
+
 #### [Badge](components/badge.md)
 Small and adaptable labels for adding information.
 - Solid and outline variants
 - Support for rounded shapes
 - Various colors available
+
+#### [Breadcrumb](components/breadcrumb.md)
+Breadcrumb navigation component to display the current location within a hierarchy.
+- Support for the customization of items and the separator
+- Accessibility support
 
 #### [Button](components/button.md)
 Interactive buttons with support for icons and different styles.
@@ -42,6 +55,7 @@ Specialized badge for use within buttons.
 - Automatic variant inversion
 - Accessibility support
 
+
 #### [Card](components/card.md)
 Complete card system for organizing content.
 - Different types (default, profile, banner)
@@ -49,33 +63,104 @@ Complete card system for organizing content.
 - Modular components (header, body, footer, etc.)
 - Support for images and icons
 
+#### [Modal](components/modal.md)
+Modal dialog component for displaying content in an overlay.
+- Accessible dialog overlay
+- Visibility controlled via Blazor state
+- No JavaScript interop required
+
+#### [Pagination](components/pagination.md)
+Pagination control for navigating large data sets across multiple pages.
+- Full and simple view modes
+- Ellipsis truncation via `PageRangeSize`
+- Optional jump-to-page input and total-items summary
+- Customizable previous/next buttons and alignment
+
+#### [Toolbar](components/toolbar.md)
+Navigation toolbar for grouping icon-based action items.
+- Horizontal and vertical orientations
+- Three size variants (default, medium, small)
+- Badge counts and labels on items
+- `BitToolbarDivider` sub-component for visual separation
+
 ### Form Components
 
 BitBlazor provides a comprehensive set of form components that integrate seamlessly with ASP.NET Core Blazor's form system and Bootstrap Italia styling.
 
-#### [Form Components Overview](components/form-components.md)
+#### [Form Components Overview](form/form-components.md)
 Complete guide to form components, including validation, accessibility, and best practices.
 
-#### [BitTextField](components/text-field.md)
+#### [BitTextField](form/text-field.md)
 Single-line text input field component.
 - Support for different input types (text, email, tel, url)
 - Input groups with prepend/append content
 - Multiple sizes and states
 - Built-in validation support
 
-#### [BitPasswordField](components/password-field.md)
+#### [BitPasswordField](form/password-field.md)
 Password input field with show/hide functionality.
 - Toggle password visibility
 - Secure input handling
 - Accessibility-compliant design
 - Validation integration
 
-#### [BitTextAreaField](components/text-area-field.md)
+#### [BitTextAreaField](form/text-area-field.md)
 Multi-line text input field component.
 - Configurable row height
 - Auto-sizing capabilities
 - Character count guidance
 - Form validation support
+
+#### [BitNumberField](form/number-field.md)
+Numeric input field component with increment/decrement controls.
+- Support for multiple numeric types (int, long, short, float, double, decimal)
+- Built-in increment/decrement buttons
+- Min/max value constraints
+- Custom step values and symbol content
+
+#### [BitSelectField](form/select-field.md)
+Dropdown select input field component.
+- Generic type support for any value type
+- Support for option grouping
+- Disabled options and groups
+- Form validation integration
+- Accessible and responsive
+
+#### [BitCheckbox](form/checkbox.md)
+Checkbox component for binary choices.
+- Boolean value selection
+- Inline and grouped layouts
+- Form validation support
+- Disabled states and accessibility
+
+#### [BitRadio](form/radio.md)
+Radio button component for single-choice selection from a set of options.
+- Group-based value selection
+- Support for any data type
+- Inline and grouped layouts
+- Form validation support
+- Disabled states and accessibility
+
+#### [BitDatepicker](form/datepicker.md)
+Date input field component for selecting dates.
+- Support for DateTime and DateOnly types
+- Native browser date picker UI
+- Form validation integration
+- Accessible and responsive
+
+#### [BitTimepicker](form/timepicker.md)
+Time input field component for selecting times.
+- Support for TimeOnly type
+- Native browser time picker UI
+- Form validation integration
+- Accessible and responsive
+
+#### [BitToggle](form/toggle.md)
+Toggle switch component for binary on/off selection.
+- Visual indicator for on/off state
+- Inline and grouped layouts
+- Form validation support
+- Modern alternative to checkboxes
 
 ### Utilities
 
@@ -85,6 +170,10 @@ Icon system based on Bootstrap Italia.
 - Multiple sizes and colors
 - Customizable alignment
 - Full accessibility support
+
+#### [Agents, Instructions & Skills](agents-and-skills.md)
+Repository-level agents, instruction files, and skills available to contributors and automation tooling. See this reference for agent names, instruction file locations, and guidance for extending skills.
+
 
 ## Common Enumerations
 

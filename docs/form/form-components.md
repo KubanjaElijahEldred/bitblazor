@@ -13,13 +13,20 @@ BitBlazor provides a comprehensive set of form components that integrate with:
 
 ## Available Form Components
 
-### Input Components
+### Components
 
 | Component | Purpose | Key Features |
 |-----------|---------|--------------|
 | [`BitTextField`](text-field.md) | Single-line text input | Email/Tel/URL types, input groups, sizes |
 | [`BitPasswordField`](password-field.md) | Password input with toggle | Show/hide functionality, secure input |
 | [`BitTextAreaField`](text-area-field.md) | Multi-line text input | Configurable rows, auto-sizing |
+| [`BitNumberField`](number-field.md) | Numeric input with controls | Increment/decrement buttons, type safety, min/max |
+| [`BitSelectField`](select-field.md) | Dropdown select input | Generic type support, option grouping, form validation |
+| [`BitDatepicker`](datepicker.md) | Date input with picker | DateTime/DateOnly support, native browser UI, validation |
+| [`BitTimepicker`](timepicker.md) | Time input with picker | TimeOnly support, native browser UI, validation |
+| [`BitCheckbox`](checkbox.md) | Boolean checkbox input | Inline/grouped layouts, form validation |
+| [`BitRadioGroup`](radio.md) | Radio group components | Inline/grouped layouts, form validation |
+| [`BitToggle`](toggle.md) | Toggle switch input | Visual on/off switch, inline/grouped layouts, form validation |
 
 ### Base Classes
 
@@ -129,6 +136,35 @@ All input components support three sizes:
                               @bind-Value="registrationModel.ConfirmPassword"
                               For="@(() => registrationModel.ConfirmPassword)" />
         </div>
+        <div class="col-md-6">
+            <BitNumberField Label="Age" 
+                            @bind-Value="registrationModel.Age"
+                            For="@(() => registrationModel.Age)"
+                            Min="13"
+                            Max="120">
+                <AdditionalText>
+                    You must be at least 13 years old to create an account.
+                </AdditionalText>
+            </BitNumberField>
+        </div>
+        <div class="col-md-6">
+            <BitTextField Label="Phone" 
+                          Type="TextFieldType.Tel"
+                          @bind-Value="registrationModel.Phone"
+                          For="@(() => registrationModel.Phone)" />
+        </div>
+        <div class="col-md-6">
+            <BitSelectField Label="Country" 
+                            @bind-Value="registrationModel.Country"
+                            For="@(() => registrationModel.Country)">
+                <BitSelectItem Value="@string.Empty">Select your country...</BitSelectItem>
+                <BitSelectItem Value="@("IT")">Italy</BitSelectItem>
+                <BitSelectItem Value="@("US")">United States</BitSelectItem>
+                <BitSelectItem Value="@("UK")">United Kingdom</BitSelectItem>
+                <BitSelectItem Value="@("FR")">France</BitSelectItem>
+                <BitSelectItem Value="@("DE")">Germany</BitSelectItem>
+            </BitSelectField>
+        </div>
         <div class="col-12">
             <BitTextAreaField Label="Bio (Optional)" 
                               Rows="4"
@@ -177,6 +213,16 @@ All input components support three sizes:
         [Required]
         [Compare(nameof(Password))]
         public string ConfirmPassword { get; set; } = string.Empty;
+        
+        [Required]
+        [Range(13, 120, ErrorMessage = "Age must be between 13 and 120")]
+        public int Age { get; set; }
+        
+        [Phone]
+        public string? Phone { get; set; }
+        
+        [Required(ErrorMessage = "Please select a country")]
+        public string Country { get; set; } = string.Empty;
         
         [StringLength(500)]
         public string? Bio { get; set; }
